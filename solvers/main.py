@@ -6,17 +6,13 @@ from .config import config
 from .client import client
 from .storage import storage
 
-def get_solver_module(year: int, day: int):
-    # Try year-specific module first
+def get_solver_class(year: int, day: int):
     try:
-        return importlib.import_module(f"aoc_agent.days.y{year}.day_{day:02d}")
-    except ImportError:
-        pass
-        
-    # Fallback to legacy flat structure
-    try:
-        return importlib.import_module(f"aoc_agent.days.day_{day:02d}")
-    except ImportError:
+        module_name = f"solvers.days.y{year}.day_{day:02d}"
+        module = importlib.import_module(module_name)
+        class_name = f"Day{day:02d}Solver"
+        return getattr(module, class_name)
+    except (ImportError, AttributeError):
         return None
 
 def cmd_solve(args):
@@ -41,17 +37,13 @@ def cmd_solve(args):
             return
 
     # 2. Load Solver
-    module = get_solver_module(year, day)
-    if not module:
+    solver_class = get_solver_class(year, day)
+    if not solver_class:
         print(f"No solver found for Day {day} {year}")
-        return
-    
-    if not hasattr(module, "DaySolver"):
-        print(f"Module aoc_agent.days.day_{day:02d} does not have a DaySolver class.")
         return
 
     # 3. Solve
-    solver = module.DaySolver(input_data)
+    solver = solver_class(input_data)
     solver.solve()
 
 def cmd_fetch(args):
