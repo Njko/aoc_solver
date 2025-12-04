@@ -1,33 +1,44 @@
-from solvers.days.y2025.day_03 import Day03Solver
+from solvers.days.y2017.day_03 import Day03Solver
 
-class MockSolver(Day03Solver):
-    def __init__(self, input_data):
-        self.input_data = input_data
-        self.lines = input_data.strip().split('\n')
+def test_day03():
+    # Part 1 Examples
+    examples_p1 = [
+        ("1", 0),
+        ("12", 3),
+        ("23", 2),
+        ("1024", 31)
+    ]
+    
+    for inp, expected in examples_p1:
+        solver = Day03Solver(inp)
+        result = solver.part1()
+        print(f"Part 1 Input: {inp}, Expected: {expected}, Got: {result}")
+        assert result == expected, f"Part 1 Failed for {inp}"
 
-def test_example():
-    input_data = """
-987654321111111
-811111111111119
-234234234234278
-818181911112111
-"""
-    solver = MockSolver(input_data)
-    result = solver.part1()
-    print(f"Part 1 Result: {result}")
-    expected = 357
-    if result == expected:
-        print("Part 1 Verification PASSED")
-    else:
-        print(f"Part 1 Verification FAILED. Expected {expected}, got {result}")
-
-    result_p2 = solver.part2()
-    print(f"Part 2 Result: {result_p2}")
-    expected_p2 = 3121910778619
-    if result_p2 == expected_p2:
-        print("Part 2 Verification PASSED")
-    else:
-        print(f"Part 2 Verification FAILED. Expected {expected_p2}, got {result_p2}")
+    # Part 2 Examples (Manual check based on sequence)
+    # 1, 1, 2, 4, 5, 10, 11, 23, 25...
+    examples_p2 = [
+        ("1", 2),
+        ("2", 4),
+        ("4", 5),
+        ("5", 10)
+    ]
+    
+    for inp, expected in examples_p2:
+        solver = Day03Solver(inp)
+        result = solver.part2()
+        print(f"Part 2 Input: {inp}, Expected: {expected}, Got: {result}")
+        assert result == expected, f"Part 2 Failed for {inp}"
 
 if __name__ == "__main__":
-    test_example()
+    test_day03()
+    
+    # Run on real input
+    from solvers.storage import storage
+    try:
+        real_input = storage.load_input(2017, 3)
+        solver = Day03Solver(real_input)
+        print(f"Real Part 1 Result: {solver.part1()}")
+        print(f"Real Part 2 Result: {solver.part2()}")
+    except Exception as e:
+        print(f"Could not run on real input: {e}")

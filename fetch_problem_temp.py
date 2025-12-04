@@ -2,8 +2,8 @@ from solvers.client import client
 from solvers.storage import storage
 import sys
 
-year = 2017
-day = 1
+year = 2018
+day = 2
 
 try:
     print(f"Fetching problem for {year} Day {day}...")
