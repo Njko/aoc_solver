@@ -1,34 +1,21 @@
-from solvers.days.y2017.day_03 import Day03Solver
+from solvers.days.y2018.day_03 import Day03Solver
 
 def test_day03():
-    # Part 1 Examples
-    examples_p1 = [
-        ("1", 0),
-        ("12", 3),
-        ("23", 2),
-        ("1024", 31)
-    ]
+    example = """#1 @ 1,3: 4x4
+#2 @ 3,1: 4x4
+#3 @ 5,5: 2x2"""
     
-    for inp, expected in examples_p1:
-        solver = Day03Solver(inp)
-        result = solver.part1()
-        print(f"Part 1 Input: {inp}, Expected: {expected}, Got: {result}")
-        assert result == expected, f"Part 1 Failed for {inp}"
+    solver = Day03Solver(example)
+    
+    # Part 1
+    result_p1 = solver.part1()
+    print(f"Example Part 1 Result: {result_p1}")
+    assert result_p1 == 4, f"Expected 4, got {result_p1}"
 
-    # Part 2 Examples (Manual check based on sequence)
-    # 1, 1, 2, 4, 5, 10, 11, 23, 25...
-    examples_p2 = [
-        ("1", 2),
-        ("2", 4),
-        ("4", 5),
-        ("5", 10)
-    ]
-    
-    for inp, expected in examples_p2:
-        solver = Day03Solver(inp)
-        result = solver.part2()
-        print(f"Part 2 Input: {inp}, Expected: {expected}, Got: {result}")
-        assert result == expected, f"Part 2 Failed for {inp}"
+    # Part 2
+    result_p2 = solver.part2()
+    print(f"Example Part 2 Result: {result_p2}")
+    assert result_p2 == 3, f"Expected 3, got {result_p2}"
 
 if __name__ == "__main__":
     test_day03()
@@ -36,7 +23,7 @@ if __name__ == "__main__":
     # Run on real input
     from solvers.storage import storage
     try:
-        real_input = storage.load_input(2017, 3)
+        real_input = storage.load_input(2018, 3)
         solver = Day03Solver(real_input)
         print(f"Real Part 1 Result: {solver.part1()}")
         print(f"Real Part 2 Result: {solver.part2()}")
